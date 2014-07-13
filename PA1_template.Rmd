@@ -3,10 +3,48 @@
 
 ## Loading and preprocessing the data
 
+Set working directory:
+``` {r}
+echo = FALSE
+setwd("~/CourseraHW/RepData_PeerAssessment1")
+```
+Create a data subdirectory if it does not exist:
+``` {r} 
+if (!file.exists("data")) {
+        dir.create("data")
+}
+```
+Download file and unzip if it isn't already there:
+``` {r}
+filePath <- "./data/"
+fileZipName <- "repdata-data-activity.zip"
+fileName <- "activity.csv"
+fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 
+ZipFile <- paste0(filePath, fileZipName)        # path to zipped data file
+if (!file.exists(ZipFile)) {
+        download.file(fileUrl, destfile = ZipFile, method ="curl")
+        unzip(ZipFile, exdir=filePath)
+        dateDownloaded <- date()
+}
+```
+Read in activity monitoring dataset:
+``` {r}
+amd <- read.csv(paste0(filePath, fileName))
+```
 
 ## What is mean total number of steps taken per day?
 
+For this part of the assignment, you can ignore the missing values in the dataset.
+Make a histogram of the total number of steps taken each day.
+
+For each data point, create a column for the day it occurred. Each interval represents a 5-minute total, therefore there are 12 data points per hour and 288 data points per day.
+```{r}
+
+```
+
+
+Calculate and report the mean and median total number of steps taken per day
 
 
 ## What is the average daily activity pattern?
