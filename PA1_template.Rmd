@@ -111,5 +111,12 @@ cat("Mean Number of Daily Steps (with missing values estimated) = ", mean(fdaily
 cat("Median Number of Daily Step (with missing values estimated) =", median(fdailysteps))
 ```
 
-
 ## Are there differences in activity patterns between weekdays and weekends?
+daydata <- fixed
+daydata$date <- as.Date(fixed$date)
+daydata["weekday"] <- NA
+daydata$weekday <- as.factor(daydata$weekday)
+
+for (i in 1:nrow(fixed)) {
+        daydata[i,"weekday"] <- daydata(fixed[i,"date"])
+}
