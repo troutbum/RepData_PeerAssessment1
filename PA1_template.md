@@ -92,12 +92,12 @@ myplot <- plot(avgdaily, type="l",
 
 ```r
 echo = TRUE
-cat("The 5-minute Interval with the Maximum Steps is: ", 
-    which(avgdaily[,"intervalsteps"]==max(avgdaily[,"intervalsteps"])))
+row <- which(avgdaily[,"intervalsteps"]==max(avgdaily[,"intervalsteps"]))
+cat("The 5-minute Interval with the Maximum Steps is: ", avgdaily[row,"times"])
 ```
 
 ```
-## The 5-minute Interval with the Maximum Steps is:  104
+## The 5-minute Interval with the Maximum Steps is:  835
 ```
 
 ```r
@@ -149,6 +149,29 @@ for (i in 1:nrow(raw)) {
 ```
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the **mean** and **median** total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+```r
+fdailysteps <- with(fixed, tapply(steps, date, sum))
+myhist2 <- hist(fdailysteps, xlab='steps', main='Histogram of Daily Steps with Missing Values Estimated')
+```
+
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
+
+```r
+cat("Mean Number of Daily Steps (with missing values estimated) = ", mean(fdailysteps))
+```
+
+```
+## Mean Number of Daily Steps (with missing values estimated) =  10766
+```
+
+```r
+cat("Median Number of Daily Step (with missing values estimated) =", median(fdailysteps))
+```
+
+```
+## Median Number of Daily Step (with missing values estimated) = 10766
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
