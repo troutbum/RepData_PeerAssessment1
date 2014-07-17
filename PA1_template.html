@@ -166,8 +166,36 @@ myhist2 &lt;- hist(fdailysteps, xlab='steps', main='Histogram of Daily Steps wit
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
-<p>daydata &lt;- fixed daydata<span class="math">\(date &lt;- as.Date(fixed\)</span>date) daydata[“weekday”] &lt;- NA daydata<span class="math">\(weekday &lt;- as.factor(daydata\)</span>weekday)</p>
-<p>for (i in 1:nrow(fixed)) { daydata[i,“weekday”] &lt;- daydata(fixed[i,“date”]) }</p>
+<p>For this part the <code>weekdays()</code> function may be of some help here. Use the dataset with the filled-in missing values for this part.</p>
+<ol style="list-style-type: decimal">
+<li>Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.</li>
+</ol>
+<pre class="r"><code>data &lt;- fixed
+data$date &lt;- as.Date(data$date)                         # convert to date object
+
+factorw &lt;- rep(NA, nrow(data))                          # create factor for weekday or weekend
+for (i in 1:nrow(data)) {
+        if (weekdays(data[i,&quot;date&quot;]) == &quot;Saturday&quot;) {
+                factorw[i] &lt;- &quot;weekend&quot;
+        }
+        else if (weekdays(data[i,&quot;date&quot;]) == &quot;Sunday&quot;) {
+                factorw[i] &lt;- &quot;weekend&quot;
+        }
+        else {
+                factorw[i] &lt;- &quot;weekday&quot;
+        }
+}
+factorw &lt;- as.factor(factorw)
+               
+steps &lt;- by(data, factorw,                              # for each factor, calculate mean steps
+                function(x) {
+                        tapply(x$steps, x$interval, mean)
+                }
+)</code></pre>
+<p>plot(times, steps[[“weekday”]], type=“l”) plot(times, steps[[“weekend”]], type=“l”)</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Make a panel plot containing a time series plot (i.e. <code>type = &quot;l&quot;</code>) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).</li>
+</ol>
 </div>
 </div>
 
