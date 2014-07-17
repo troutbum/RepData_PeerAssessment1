@@ -112,11 +112,28 @@ cat("Median Number of Daily Step (with missing values estimated) =", median(fdai
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
-daydata <- fixed
-daydata$date <- as.Date(fixed$date)
-daydata["weekday"] <- NA
-daydata$weekday <- as.factor(daydata$weekday)
+For this part the `weekdays()` function may be of some help here. Use
+the dataset with the filled-in missing values for this part.
 
-for (i in 1:nrow(fixed)) {
-        daydata[i,"weekday"] <- daydata(fixed[i,"date"])
+1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+
+```{r}
+data <- fixed
+data$date <- as.Date(data$date)
+data["day"] <- NA
+for (i in 1:nrow(data)) {
+        if (weekdays(data[i,"date"]) == "Saturday") {
+                data[i,"day"] <- "weekend"
+        }
+        else if (weekdays(data[i,"date"]) == "Sunday") {
+                data[i,"day"] <- "weekend"
+        }
+        else {
+                data[i,"day"] <- "weekday"
+        }
 }
+data$day <- as.factor(data$day)
+```
+
+2. Make a panel plot containing a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+
