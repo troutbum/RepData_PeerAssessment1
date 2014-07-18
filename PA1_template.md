@@ -173,5 +173,59 @@ cat("Median Number of Daily Step (with missing values estimated) =", median(fdai
 ## Median Number of Daily Step (with missing values estimated) = 10766
 ```
 
-
 ## Are there differences in activity patterns between weekdays and weekends?
+For this part the `weekdays()` function may be of some help here. Use
+the dataset with the filled-in missing values for this part.
+
+1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+
+
+```r
+data <- fixed
+data$date <- as.Date(data$date)                         # convert to date object
+
+factorw <- rep(NA, nrow(data))                          # allocate for factor
+for (i in 1:nrow(data)) {                               # walk through data, weekday or weekend?
+        if (weekdays(data[i,"date"]) == "Saturday") {
+                factorw[i] <- "weekend"
+        }
+        else if (weekdays(data[i,"date"]) == "Sunday") {
+                factorw[i] <- "weekend"
+        }
+        else {
+                factorw[i] <- "weekday"
+        }
+}
+factorw <- as.factor(factorw)                           # factor:  weekday or weekend levels
+               
+steps <- by(data, factorw,                              # per factor, calc mean steps per interval
+                function(x) {                           
+                        tapply(x$steps, x$interval, mean)
+                }
+)
+```
+                
+2. Make a panel plot containing a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+
+```r
+## set graphics parameters
+#       mfcol - matrix of sub plots (filled by column)
+#       mar - margins
+#       oma - outside margins
+par(mfcol = c(2, 1), mar = c(4, 4, 2, 2), oma = c(0, 0, 0, 0))
+
+plot(times, steps[["weekday"]], type="l",
+     xlab='', ylab='',
+     xlim=c(0, 2400), ylim=c(0, 250),
+     main='Weekday')
+
+plot(times, steps[["weekend"]], type="l", 
+     xlab='Time (5-min intervals)', ylab='Average Number of Steps',
+     xlim=c(0, 2400), ylim=c(0, 250),
+     main='Weekend',
+     col="red")
+```
+
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14.png) 
+
+
