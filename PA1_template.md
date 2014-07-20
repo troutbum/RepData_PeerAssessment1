@@ -7,7 +7,7 @@
 Set working directory:
 
 ```r
-setwd("~/CourseraHW/RepData_PeerAssessment1")
+setwd("~/GitHub/RepData_PeerAssessment1")
 ```
 Create a data subdirectory if it does not exist:
 
@@ -57,7 +57,6 @@ myhist <- hist(dailysteps, xlab='steps', main='Histogram of Daily Steps')
 2. Calculate and report the **mean** and **median** total number of steps taken per day
 
 ```r
-echo = TRUE
 cat("Mean Number of Daily Steps = ", mean(dailysteps))
 ```
 
@@ -91,7 +90,6 @@ myplot <- plot(avgdaily, type="l",
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 ```r
-echo = TRUE
 row <- which(avgdaily[,"intervalsteps"]==max(avgdaily[,"intervalsteps"]))
 cat("The 5-minute Interval with the Maximum Steps is: ", avgdaily[row,"times"])
 ```
@@ -116,7 +114,6 @@ bias into some calculations or summaries of the data.
 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with `NA`s)
 
 ```r
-echo = TRUE
 cat("Total number of rows with NAs =", (nrow(raw) - nrow(na.omit(raw))))
 ```
 
@@ -127,7 +124,6 @@ cat("Total number of rows with NAs =", (nrow(raw) - nrow(na.omit(raw))))
 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
 ```r
-echo = TRUE
 cat("My strategy is to replace all missing values with the mean value for the corresponding 5-minute interval")
 ```
 
